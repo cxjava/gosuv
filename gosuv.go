@@ -11,8 +11,8 @@ import (
 	"runtime"
 	"strings"
 
-	"github.com/imroc/req"
 	"github.com/cxjava/gosuv/log"
+	"github.com/imroc/req"
 	"github.com/urfave/cli"
 )
 
@@ -126,8 +126,8 @@ func main() {
 		}
 		return nil
 	}
-	app.Authors = []*cli.Author{
-		&cli.Author{
+	app.Authors = []cli.Author{
+		cli.Author{
 			Name:  "cxjava",
 			Email: "cxjava@gmail.com",
 		},
@@ -139,7 +139,7 @@ func main() {
 			Value: defaultConfigPath,
 		},
 	}
-	app.Commands = []*cli.Command{
+	app.Commands = []cli.Command{
 		{
 			Name:  "start-server",
 			Usage: "Start supervisor and run in background",
