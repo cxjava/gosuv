@@ -23,7 +23,7 @@ import (
 	"github.com/go-yaml/yaml"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
-	"github.com/qiniu/log"
+	"github.com/cxjava/gosuv/log"
 	_ "github.com/shurcooL/vfsgen"
 )
 

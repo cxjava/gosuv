@@ -12,7 +12,7 @@ import (
 	"strings"
 
 	"github.com/imroc/req"
-	"github.com/qiniu/log"
+	"github.com/cxjava/gosuv/log"
 	"github.com/urfave/cli"
 )
 

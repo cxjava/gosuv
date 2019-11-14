@@ -35,7 +35,7 @@ import (
 	"github.com/kennygrant/sanitize"
 	"github.com/lunny/dingtalk_webhook"
 	"github.com/natefinch/lumberjack"
-	"github.com/qiniu/log"
+	"github.com/cxjava/gosuv/log"
 )
 
 type FSMState string
