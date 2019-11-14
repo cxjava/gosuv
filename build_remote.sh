@@ -3,7 +3,7 @@
 
 set -e
 
-TARGET=build_tmp/src/github.com/codeskyblue/gosuv
+TARGET=build_tmp/src/github.com/cxjava/gosuv
 HOST="pi3-0"
 ssh pi@$HOST mkdir -p $TARGET
 

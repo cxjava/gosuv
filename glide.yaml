@@ -1,6 +1,6 @@
-package: github.com/soopsio/gosuv
+package: github.com/cxjava/gosuv
 import:
-- package: github.com/soopsio/kexec
+- package: github.com/cxjava/kexec
 - package: github.com/equinox-io/equinox
 - package: github.com/imroc/req
 - package: github.com/glycerine/rbuf

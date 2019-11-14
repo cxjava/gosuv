@@ -18,13 +18,13 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/cxjava/gosuv/gops"
+	"github.com/cxjava/kexec"
 	"github.com/go-yaml/yaml"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 	"github.com/qiniu/log"
 	_ "github.com/shurcooL/vfsgen"
-	"github.com/soopsio/gosuv/gops"
-	"github.com/soopsio/kexec"
 )
 
 var defaultGosuvDir string

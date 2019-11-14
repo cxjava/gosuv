@@ -1,5 +1,5 @@
 # gosuv
-[![Build Status](https://travis-ci.org/codeskyblue/gosuv.svg)](https://travis-ci.org/codeskyblue/gosuv)
+[![Build Status](https://travis-ci.org/cxjava/gosuv.svg)](https://travis-ci.org/cxjava/gosuv)
 
 [中文README](README_ZH.md) 不是很全，能看懂英文的还是尽量看英文
 
@@ -43,19 +43,19 @@ Go version at least `1.6+`
 The fastest way is run with. Default install location is `/usr/local/bin`, change env-var `BINDIR` will also change install location.
 
 ```
-curl https://raw.githubusercontent.com/codeskyblue/gosuv/master/get.sh | bash
+curl https://raw.githubusercontent.com/cxjava/gosuv/master/get.sh | bash
 ```
 
 Or just download binaries
 
-<https://github.com/codeskyblue/gosuv/releases>
+<https://github.com/cxjava/gosuv/releases>
 
 Thanks to [goreleaser](https://github.com/goreleaser/goreleaser) which makes publish binaries automaticly.
 
 ### Build from source
 ```sh
-go get -d github.com/codeskyblue/gosuv
-cd $GOPATH/src/github.com/codeskyblue/gosuv
+go get -d github.com/cxjava/gosuv
+cd $GOPATH/src/github.com/cxjava/gosuv
 go generate # package html resources into go
 go build -tags vfs
 ```

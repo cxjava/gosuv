@@ -30,12 +30,12 @@ import (
 	"time"
 
 	"github.com/axgle/pinyin"
+	"github.com/cxjava/gosuv/pushover"
+	"github.com/cxjava/kexec"
 	"github.com/kennygrant/sanitize"
 	"github.com/lunny/dingtalk_webhook"
 	"github.com/natefinch/lumberjack"
 	"github.com/qiniu/log"
-	"github.com/soopsio/gosuv/pushover"
-	"github.com/soopsio/kexec"
 )
 
 type FSMState string

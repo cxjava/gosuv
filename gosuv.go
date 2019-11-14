@@ -46,7 +46,7 @@ func githubLatestVersion(repo, name string) (tag TagInfo, err error) {
 }
 
 func githubUpdate(skipConfirm bool) error {
-	repo, name := "soopsio", "gosuv"
+	repo, name := "cxjava", "gosuv"
 	tag, err := githubLatestVersion(repo, name)
 	if err != nil {
 		fmt.Println("Update failed:", err)
@@ -78,7 +78,7 @@ func githubUpdate(skipConfirm bool) error {
 	osArch := runtime.GOOS + "_" + runtime.GOARCH
 
 	downloadURL := StringFormat("https://github.com/{repo}/{name}/releases/download/{tag}/{name}_{version}_{os_arch}.tar.gz", map[string]interface{}{
-		"repo":    "codeskyblue",
+		"repo":    "cxjava",
 		"name":    "gosuv",
 		"tag":     tag.Version,
 		"version": cleanVersion,
@@ -128,8 +128,8 @@ func main() {
 	}
 	app.Authors = []*cli.Author{
 		&cli.Author{
-			Name:  "codeskyblue",
-			Email: "codeskyblue@gmail.com",
+			Name:  "cxjava",
+			Email: "cxjava@gmail.com",
 		},
 	}
 	app.Flags = []cli.Flag{
