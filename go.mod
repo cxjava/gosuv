@@ -3,6 +3,7 @@ module github.com/cxjava/gosuv
 go 1.13
 
 require (
+	github.com/UnnoTed/fileb0x v1.1.4 // indirect
 	github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394 // indirect
 	github.com/axgle/pinyin v0.0.0-20180208003132-d1557e083be4
 	github.com/bluele/gcache v0.0.0-20190518031135-bc40bd653833
@@ -21,5 +22,6 @@ require (
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/stretchr/testify v1.4.0 // indirect
 	github.com/urfave/cli v1.22.1
+	golang.org/x/net v0.0.0-20190311183353-d8887717615a
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0 // indirect
 )
