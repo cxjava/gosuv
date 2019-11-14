@@ -1,0 +1,60 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/golang:1.13
+        environment:
+          - GO111MODULE=on
+          - GORELEASER_VERSION=0.120.2
+          - UPXVER=3.94
+    parallelism: 1
+    steps:
+      - checkout
+      - run: cat go.sum
+      - restore_cache:
+          keys:
+            - go-mod-v4-{{ checksum "go.sum" }}
+      - run:
+          name: install goreleaser
+          command: wget https://github.com/goreleaser/goreleaser/releases/download/v${GORELEASER_VERSION}/goreleaser_amd64.deb && sudo dpkg -i goreleaser_amd64.deb
+
+      - run:
+          name: install fileb0x
+          command: |
+            go get -u -v github.com/UnnoTed/fileb0x
+            go install github.com/UnnoTed/fileb0x
+
+      - run:
+          name: installing upx
+          environment:
+            BASH_ENV: /home/circleci/.bashrc
+          command: |
+            echo "Installing upx .."
+            curl -OL "https://github.com/upx/upx/releases/download/v${UPXVER}/upx-${UPXVER}-amd64_linux.tar.xz"
+            tar xvf "upx-${UPXVER}-amd64_linux.tar.xz"
+            cp "upx-${UPXVER}-amd64_linux/upx" "$(go env GOPATH)/bin"
+            ls -al "$(go env GOPATH)/bin"
+            upx --version
+            chmod +x upx.sh
+            ls -al
+
+      - run:
+          name: Run build
+          command: |
+            export GO_VERSION="$(go version)"
+            export BUILT_BY="$(whoami)@$(hostname)"
+            goreleaser release --skip-validate --skip-sign --debug
+
+      - run: cat go.sum
+      - run: go mod tidy
+      - run: cat go.sum
+      - save_cache:
+          key: go-mod-v4-{{ checksum "go.sum" }}
+          paths:
+            - "/go/pkg/mod"
+
+workflows:
+  version: 2
+  build-workflow:
+    jobs:
+      - build
