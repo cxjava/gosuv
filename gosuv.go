@@ -119,36 +119,36 @@ func main() {
 	app.Usage = "golang port of python-supervisor"
 	app.Before = func(c *cli.Context) error {
 		var err error
-		cfgPath := c.GlobalString("conf")
+		cfgPath := c.String("conf")
 		cfg, err = readConf(cfgPath)
 		if err != nil {
 			log.Fatal(err)
 		}
 		return nil
 	}
-	app.Authors = []cli.Author{
-		cli.Author{
+	app.Authors = []*cli.Author{
+		&cli.Author{
 			Name:  "codeskyblue",
 			Email: "codeskyblue@gmail.com",
 		},
 	}
 	app.Flags = []cli.Flag{
-		cli.StringFlag{
+		&cli.StringFlag{
 			Name:  "conf, c",
 			Usage: "config file",
 			Value: defaultConfigPath,
 		},
 	}
-	app.Commands = []cli.Command{
+	app.Commands = []*cli.Command{
 		{
 			Name:  "start-server",
 			Usage: "Start supervisor and run in background",
 			Flags: []cli.Flag{
-				cli.BoolFlag{
+				&cli.BoolFlag{
 					Name:  "foreground, f",
 					Usage: "start in foreground",
 				},
-				cli.StringFlag{
+				&cli.StringFlag{
 					Name:  "conf, c",
 					Usage: "config file",
 					Value: defaultConfigPath,
@@ -181,7 +181,7 @@ func main() {
 			Name:  "shutdown",
 			Usage: "Shutdown server",
 			Flags: []cli.Flag{
-				cli.BoolFlag{
+				&cli.BoolFlag{
 					Name:  "restart, r",
 					Usage: "restart server(todo)",
 				},
@@ -198,12 +198,12 @@ func main() {
 			Name:  "update-self",
 			Usage: "Update gosuv itself",
 			Flags: []cli.Flag{
-				cli.StringFlag{
+				&cli.StringFlag{
 					Name:  "channel, c",
 					Usage: "update channel name, stable or dev",
 					Value: "stable",
 				},
-				cli.BoolFlag{
+				&cli.BoolFlag{
 					Name:  "yes, y",
 					Usage: "Do not promote to confirm",
 				},

@@ -106,7 +106,7 @@ func (cluster *Cluster) cmdQueryDistributedPrograms(w http.ResponseWriter, r *ht
 
 	w.Header().Set("Content-Type", "application/json")
 	slaves := []string{}
-	for _, v := range cluster.slaves.GetALL() {
+	for _, v := range cluster.slaves.GetALL(false) {
 		if slave, ok := v.(string); ok {
 			slaves = append(slaves, slave)
 		}
@@ -119,7 +119,7 @@ func (cluster *Cluster) cmdQueryDistributedPrograms(w http.ResponseWriter, r *ht
 		if body, err := cluster.requestSlave(reqUrl, http.MethodGet, nil); err == nil {
 			jsonOut += fmt.Sprintf("\"%s\":%s", slave, body)
 		}
-		if idx < cluster.slaves.Len()-1 {
+		if idx < cluster.slaves.Len(false)-1 {
 			jsonOut += ","
 		}
 		idx += 1
