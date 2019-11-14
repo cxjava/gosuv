@@ -180,3 +180,18 @@ This part is set in the `programs.yml`, take look the example
 
 ## LICENSE
 [MIT](LICENSE)
+
+
+## show go mod graph
+
+```shell script
+
+go get github.com/poloxue/modv
+
+go mod graph | modv | dot -T png | open -f -a /System/Applications/Preview.app
+
+go mod graph | modv | dot -T png  > graph.png
+
+go mod graph | modv | dot -T png | open -f -a /Applications/Preview.app
+
+```
