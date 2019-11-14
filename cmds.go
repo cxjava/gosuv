@@ -195,11 +195,6 @@ func actionEdit(c *cli.Context) error {
 	return cmd.Run()
 }
 
-func actionVersion(c *cli.Context) error {
-	fmt.Printf("gosuv version %s\n", version)
-	return nil
-}
-
 func actionReload(c *cli.Context) error {
 	ret, err := postForm("/api/reload", nil)
 	if err != nil {

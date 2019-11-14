@@ -18,13 +18,13 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/cxjava/gosuv/assets"
 	"github.com/cxjava/gosuv/gops"
+	"github.com/cxjava/gosuv/log"
 	"github.com/cxjava/kexec"
 	"github.com/go-yaml/yaml"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
-	"github.com/cxjava/gosuv/log"
-	_ "github.com/shurcooL/vfsgen"
 )
 
 var defaultGosuvDir string
@@ -34,7 +34,7 @@ func init() {
 	if defaultGosuvDir == "" {
 		defaultGosuvDir = filepath.Join(UserHomeDir(), ".gosuv")
 	}
-	http.Handle("/res/", http.StripPrefix("/res/", http.FileServer(Assets))) // http.StripPrefix("/res/", Assets))
+	http.Handle("/res/", http.StripPrefix("/res/", http.FileServer(assets.HTTP))) // http.StripPrefix("/res/", Assets))
 }
 
 type Supervisor struct {
@@ -238,7 +238,7 @@ type WebConfig struct {
 }
 
 func (s *Supervisor) renderHTML(w http.ResponseWriter, name string, data interface{}) {
-	file, err := Assets.Open(name + ".html")
+	file, err := assets.HTTP.Open(name + ".html")
 	if err != nil {
 		panic(err)
 	}
@@ -247,7 +247,7 @@ func (s *Supervisor) renderHTML(w http.ResponseWriter, name string, data interfa
 
 	if data == nil {
 		wc := WebConfig{}
-		wc.Version = version
+		wc.Version = Version
 		user, err := user.Current()
 		if err == nil {
 			wc.User = user.Username

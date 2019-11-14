@@ -18,8 +18,6 @@ require (
 	github.com/lunny/dingtalk_webhook v0.0.0-20171025031554-e3534c89ef96
 	github.com/mitchellh/go-ps v0.0.0-20190716172923-621e5597135b
 	github.com/natefinch/lumberjack v2.0.0+incompatible
-	github.com/shurcooL/httpfs v0.0.0-20190707220628-8d4bc4ba7749 // indirect
-	github.com/shurcooL/vfsgen v0.0.0-20181202132449-6a9ea43bcacd
 	github.com/smartystreets/goconvey v1.6.4
 	github.com/stretchr/testify v1.4.0 // indirect
 	github.com/urfave/cli v1.22.1

@@ -1,3 +1,9 @@
+<div align="center">
+  <a href="https://travis-ci.org/cxjava/gosuv">
+    <img src="https://travis-ci.org/cxjava/gosuv.svg?branch=master" alt="Build Status">
+  </a>
+</div>
+
 # gosuv
 [![Build Status](https://travis-ci.org/cxjava/gosuv.svg)](https://travis-ci.org/cxjava/gosuv)
 
