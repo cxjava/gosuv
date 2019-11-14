@@ -14,7 +14,6 @@ import (
 	"strings"
 	"time"
 
-	// "github.com/franela/goreq"
 	"github.com/goji/httpauth"
 	"github.com/imroc/req"
 	"github.com/urfave/cli"
