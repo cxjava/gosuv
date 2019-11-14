@@ -182,10 +182,6 @@ func actionShutdown(c *cli.Context) error {
 	return nil
 }
 
-func actionUpdateSelf(c *cli.Context) error {
-	return githubUpdate(c.Bool("yes"))
-}
-
 func actionEdit(c *cli.Context) error {
 	cmd := exec.Command("vim", filepath.Join(os.Getenv("HOME"), ".gosuv/programs.yml"))
 	cmd.Stdout = os.Stdout
