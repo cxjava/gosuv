@@ -39,7 +39,7 @@ builds:
       - goos: darwin
         goarch: arm
     hooks:
-      post: ./upx.sh
+      post: ./upx.sh {{.ProjectName}}
 archives:
   - id: binary
     name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
