@@ -3,11 +3,11 @@ module github.com/cxjava/gosuv
 go 1.13
 
 require (
-	github.com/UnnoTed/fileb0x v1.1.4 // indirect
 	github.com/axgle/mahonia v0.0.0-20180208002826-3358181d7394 // indirect
 	github.com/axgle/pinyin v0.0.0-20180208003132-d1557e083be4
 	github.com/bluele/gcache v0.0.0-20190518031135-bc40bd653833
 	github.com/cxjava/kexec v0.0.0-20180119015717-5a4bed90d99a
+	github.com/davecgh/go-spew v1.1.1 // indirect
 	github.com/glycerine/goconvey v0.0.0-20190410193231-58a59202ab31 // indirect
 	github.com/glycerine/rbuf v0.0.0-20190314090850-75b78581bebe
 	github.com/go-yaml/yaml v2.1.0+incompatible
