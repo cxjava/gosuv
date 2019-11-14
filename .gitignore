@@ -32,3 +32,5 @@ assets_vfsdata.go
 .vscode/
 vendor/*
 *.un~
+.idea
+*.iml
