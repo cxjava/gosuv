@@ -34,3 +34,5 @@ vendor/*
 *.un~
 .idea
 *.iml
+assets/assets_release.go
+dist
