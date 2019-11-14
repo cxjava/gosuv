@@ -1,3 +1,5 @@
+//go:generate go run github.com/UnnoTed/fileb0x b0x.yaml
+
 package main
 
 import (
@@ -16,11 +18,8 @@ import (
 	"github.com/urfave/cli"
 )
 
-const appID = "app_8Gji4eEAdDx"
-
 var (
-	version string = "master"
-	cfg     Configuration
+	cfg Configuration
 )
 
 type TagInfo struct {
@@ -51,10 +50,6 @@ func githubUpdate(skipConfirm bool) error {
 	if err != nil {
 		fmt.Println("Update failed:", err)
 		return err
-	}
-	if tag.Version == version {
-		fmt.Println("No update available, already at the latest version!")
-		return nil
 	}
 
 	fmt.Println("New version available -- ", tag.Version)
@@ -110,12 +105,17 @@ func checkServerStatus() error {
 	return nil
 }
 
+func init() {
+	cli.VersionPrinter = func(c *cli.Context) {
+		showVersion()
+	}
+}
+
 func main() {
 	var defaultConfigPath = filepath.Join(defaultGosuvDir, "conf/config.yml")
 
 	app := cli.NewApp()
 	app.Name = "gosuv"
-	app.Version = version
 	app.Usage = "golang port of python-supervisor"
 	app.Before = func(c *cli.Context) error {
 		var err error
@@ -214,12 +214,6 @@ func main() {
 			Name:   "edit",
 			Usage:  "Edit config file",
 			Action: actionEdit,
-		},
-		{
-			Name:    "version",
-			Usage:   "Show version",
-			Aliases: []string{"v"},
-			Action:  actionVersion,
 		},
 	}
 	if err := app.Run(os.Args); err != nil {
