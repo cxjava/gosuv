@@ -23,8 +23,8 @@ install:
   - upx --version
   - chmod +x upx.sh
   - ls -al
-  - go get -u -v github.com/UnnoTed/fileb0x
-  - go install github.com/UnnoTed/fileb0x
+  - go get -u -v github.com/gobuffalo/packr/v2/packr2
+  - go install github.com/gobuffalo/packr/v2/packr2
 
 script:
   - echo "skip test"

@@ -18,9 +18,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/cxjava/gosuv/assets"
 	"github.com/cxjava/gosuv/gops"
 	"github.com/cxjava/gosuv/log"
+	"github.com/cxjava/gosuv/web"
 	"github.com/cxjava/kexec"
 	"github.com/go-yaml/yaml"
 	"github.com/gorilla/mux"
@@ -34,7 +34,7 @@ func init() {
 	if defaultGosuvDir == "" {
 		defaultGosuvDir = filepath.Join(UserHomeDir(), ".gosuv")
 	}
-	http.Handle("/res/", http.StripPrefix("/res/", http.FileServer(assets.HTTP))) // http.StripPrefix("/res/", Assets))
+	http.Handle("/res/", http.StripPrefix("/res/", http.FileServer(web.Box()))) // http.StripPrefix("/res/", Assets))
 }
 
 type Supervisor struct {
@@ -238,13 +238,7 @@ type WebConfig struct {
 }
 
 func (s *Supervisor) renderHTML(w http.ResponseWriter, name string, data interface{}) {
-	file, err := assets.HTTP.Open(name + ".html")
-	if err != nil {
-		panic(err)
-	}
-	defer file.Close()
-	body, _ := ioutil.ReadAll(file)
-
+	body, _ := web.Box().Find(name + ".html")
 	if data == nil {
 		wc := WebConfig{}
 		wc.Version = Version
