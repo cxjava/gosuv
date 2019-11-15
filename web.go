@@ -474,6 +474,25 @@ func (s *Supervisor) hStopProgram(w http.ResponseWriter, r *http.Request) {
 	w.Write(data)
 }
 
+func (s *Supervisor) hRestartProgram(w http.ResponseWriter, r *http.Request) {
+	name := mux.Vars(r)["name"]
+	proc, ok := s.procMap[name]
+	var data []byte
+	if !ok {
+		data, _ = json.Marshal(map[string]interface{}{
+			"status": 1,
+			"error":  fmt.Sprintf("Process %s not exists", strconv.Quote(name)),
+		})
+	} else {
+		proc.Operate(RestartEvent)
+		data, _ = json.Marshal(map[string]interface{}{
+			"status": 0,
+			"name":   name,
+		})
+	}
+	w.Write(data)
+}
+
 func (s *Supervisor) hWebhook(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	name, category := vars["name"], vars["category"]
@@ -674,6 +693,7 @@ func newSupervisorHandler() (suv *Supervisor, hdlr http.Handler, err error) {
 	r.HandleFunc("/api/programs", suv.hAddProgram).Methods("POST")
 	r.HandleFunc("/api/programs/{name}/start", suv.hStartProgram).Methods("POST")
 	r.HandleFunc("/api/programs/{name}/stop", suv.hStopProgram).Methods("POST")
+	r.HandleFunc("/api/programs/{name}/restart", suv.hRestartProgram).Methods("POST")
 
 	r.HandleFunc("/ws/events", suv.wsEvents)
 	r.HandleFunc("/ws/logs/{name}", suv.wsLog)

@@ -30,12 +30,12 @@ import (
 	"time"
 
 	"github.com/axgle/pinyin"
+	"github.com/cxjava/gosuv/log"
 	"github.com/cxjava/gosuv/pushover"
 	"github.com/cxjava/kexec"
 	"github.com/kennygrant/sanitize"
 	"github.com/lunny/dingtalk_webhook"
 	"github.com/natefinch/lumberjack"
-	"github.com/cxjava/gosuv/log"
 )
 
 type FSMState string
@@ -236,9 +236,9 @@ func (p *Process) buildCommand() *kexec.KCommand {
 	// p.OutputFile = NewRotate(filepath.Join(logDir, "output.log"))
 	p.OutputFile = &lumberjack.Logger{
 		Filename:   filepath.Join(logDir, "output.log"),
-		MaxSize:    1024,
-		MaxAge:     14,
-		MaxBackups: 14,
+		MaxSize:    512,
+		MaxAge:     7,
+		MaxBackups: 7,
 		Compress:   false,
 		LocalTime:  true,
 	}
@@ -439,12 +439,11 @@ func NewProcess(pg Program) *Process {
 	pr.AddHandler(Running, StopEvent, func() {
 		select {
 		case pr.stopC <- syscall.SIGTERM:
-		case <-time.After(200 * time.Millisecond):
+		case <-time.After(30 * time.Second):
 		}
 	}).AddHandler(Running, RestartEvent, func() {
 		go func() {
 			pr.Operate(StopEvent)
-			// TODO: start laterly
 			time.Sleep(1 * time.Second)
 			pr.Operate(StartEvent)
 		}()
