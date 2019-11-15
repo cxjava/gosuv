@@ -26,6 +26,9 @@ install:
   - go get -u -v github.com/gobuffalo/packr/v2/packr2
   - go install github.com/gobuffalo/packr/v2/packr2
 
+script:
+  - go test -v
+
 deploy:
   - provider: script
     skip_cleanup: true

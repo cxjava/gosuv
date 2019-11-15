@@ -7,8 +7,6 @@ import (
 	"runtime"
 	"strings"
 	"time"
-
-	"github.com/cxjava/gosuv/log"
 )
 
 var ErrGoTimeout = errors.New("GoTimeoutFunc")
@@ -29,7 +27,6 @@ func GoTimeoutFunc(timeout time.Duration, f func() error) chan error {
 		case err = <-GoFunc(f):
 			ch <- err
 		case <-time.After(timeout):
-			log.Debugf("timeout: %v", f)
 			ch <- ErrGoTimeout
 		}
 	}()
