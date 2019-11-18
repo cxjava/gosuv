@@ -1,11 +1,7 @@
-<div align="center">
-  <a href="https://travis-ci.org/cxjava/gosuv">
-    <img src="https://travis-ci.org/cxjava/gosuv.svg?branch=master" alt="Build Status">
-  </a>
-</div>
+[![Travis CI Status](https://travis-ci.org/cxjava/gosuv.svg?branch=master)](https://travis-ci.org/cxjava/gosuv)
+[![Circle CI Status](https://circleci.com/gh/cxjava/gosuv.svg?style=svg)](https://circleci.com/gh/cxjava/gosuv)
 
 # gosuv
-[![Build Status](https://travis-ci.org/cxjava/gosuv.svg)](https://travis-ci.org/cxjava/gosuv)
 
 [中文README](README_ZH.md) 不是很全，能看懂英文的还是尽量看英文
 
