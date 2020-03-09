@@ -39,12 +39,10 @@ jobs:
           echo ::set-env name=BUILT_BY::$(whoami)@$(hostname)
           echo ::set-env name=GORELEASER_CURRENT_TAG::$(git describe --abbrev=0 --tags)
       - name: Run GoReleaser
-        uses: goreleaser/goreleaser-action@v1
-        with:
-          version: latest
-          args: release --skip-validate --skip-sign --debug
+        run: |
+          curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
+          goreleaser release --skip-validate --skip-sign --debug
         env:
           GO_VERSION: ${{ env.GO_VERSION }}
           BUILT_BY: ${{ env.BUILT_BY }}
-          GORELEASER_CURRENT_TAG: ${{ env.GORELEASER_CURRENT_TAG }}
-          GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
