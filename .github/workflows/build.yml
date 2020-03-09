@@ -37,7 +37,7 @@ jobs:
         run: |
           echo ::set-env name=GO_VERSION::$(go version)
           echo ::set-env name=BUILT_BY::$(whoami)@$(hostname)
-          echo ::set-env name=GORELEASER_CURRENT_TAG::"0.2.6"
+          echo ::set-env name=GORELEASER_CURRENT_TAG::$(git describe --abbrev=0 --tags)
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v1
         with:
