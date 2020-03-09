@@ -12,7 +12,7 @@ on:
    types: started
 
 env:
-  UPXVER: 3.96
+  UPXVER: 3.94
 
 jobs:
   goreleaser:
