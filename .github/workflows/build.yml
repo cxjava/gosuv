@@ -40,7 +40,9 @@ jobs:
           echo ::set-env name=GORELEASER_CURRENT_TAG::$(git describe --abbrev=0 --tags)
       - name: Run GoReleaser
         run: |
-          curl -sfL https://install.goreleaser.com/github.com/goreleaser/goreleaser.sh | sh
+          wget $(curl -s https://api.github.com/repos/goreleaser/goreleaser/releases | grep browser_download_url | grep 'goreleaser_Linux_x86_64' | head -n 1 | cut -d '"' -f 4)
+          tar -zxvf goreleaser_Linux_x86_64.tar.gz
+          export PATH=`pwd`/goreleaser_Linux_x86_64/:$PATH
           goreleaser release --skip-validate --skip-sign --debug
         env:
           GO_VERSION: ${{ env.GO_VERSION }}
