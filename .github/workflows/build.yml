@@ -35,6 +35,8 @@ jobs:
           echo "::add-path::`pwd`/upx-${UPXVER}-amd64_linux/"
           upx --version
           chmod +x upx.sh
+          git version
+          git describe --abbrev=0 --tags
       - name: Set environment variables
         run: |
           echo ::set-env name=GO_VERSION::$(go version)
