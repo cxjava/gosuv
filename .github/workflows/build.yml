@@ -12,7 +12,7 @@ on:
    types: started
 
 env:
-  UPXVER: 3.94
+  UPXVER: 3.96
 
 jobs:
   goreleaser:
@@ -30,8 +30,7 @@ jobs:
           echo "Installing upx .."
           curl -OL "https://github.com/upx/upx/releases/download/v${UPXVER}/upx-${UPXVER}-amd64_linux.tar.xz"
           tar xvf "upx-${UPXVER}-amd64_linux.tar.xz"
-          cp "upx-${UPXVER}-amd64_linux/upx" "$(go env GOPATH)/bin"
-          ls -al "$(go env GOPATH)/bin"
+          export PATH=`pwd`/upx-${UPXVER}-amd64_linux/:$PATH
           upx --version
           chmod +x upx.sh
           ls -al
