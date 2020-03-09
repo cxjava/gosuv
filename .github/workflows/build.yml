@@ -33,13 +33,18 @@ jobs:
           export PATH=`pwd`/upx-${UPXVER}-amd64_linux/:$PATH
           upx --version
           chmod +x upx.sh
-          ls -al
+      - name: Set environment variables
+        run: |
+          echo ::set-env name=GO_VERSION::$(go version)
+          echo ::set-env name=BUILT_BY::$(whoami)@$(hostname)
+          echo ::set-env name=GORELEASER_CURRENT_TAG::"0.2.6"
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v1
         with:
           version: latest
           args: release --skip-validate --skip-sign --debug
         env:
-          GO_VERSION: $(go version)
-          BUILT_BY: $(whoami)@$(hostname)
+          GO_VERSION: ${{ env.GO_VERSION }}
+          BUILT_BY: ${{ env.BUILT_BY }}
+          GORELEASER_CURRENT_TAG: ${{ env.GORELEASER_CURRENT_TAG }}
           GITHUB_TOKEN: ${{ secrets.GIT_HUB_TOKEN }}
