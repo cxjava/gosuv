@@ -51,5 +51,5 @@ jobs:
           BUILT_BY: ${{ env.BUILT_BY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          args: release --config .github/goreleaser.yml
+          args: release --skip-validate --skip-sign --debug --config .github/goreleaser.yml
         if: success()
