@@ -22,7 +22,8 @@ _testmain.go
 *.exe
 *.test
 *.prof
-
+web/packrd/
+web/web-packr.go
 dist/
 output/
 gosuv
