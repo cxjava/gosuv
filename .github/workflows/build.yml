@@ -8,8 +8,11 @@ on:
   #     - master
   # schedule:
   #  - cron: 0 8 * * 5
+  push:
+    tags:
+      - "v*"
   watch:
-   types: started
+    types: started
 
 env:
   UPXVER: 3.96
@@ -23,10 +26,16 @@ jobs:
         uses: actions/setup-go@v1
         with:
           go-version: 1.14.x
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
+      - name: Check out code
+        uses: actions/checkout@master
+      - name: Check git tag exist
+        run: |
+          gitTagExists=$(git tag --points-at HEAD)
+          if ! [ -n "$gitTagExists" ]; then
+              echo "no tag, create one."
+              RELEASE_NAME=v$(date +%Y.%m%d.%H%M)
+              git tag $RELEASE_NAME
+          fi
       - name: Install upx
         run: |
           echo "Installing upx .."
@@ -35,23 +44,14 @@ jobs:
           echo "::add-path::`pwd`/upx-${UPXVER}-amd64_linux/"
           upx --version
           chmod +x upx.sh
-          git version
-          git describe --abbrev=0 --tags
       - name: Set environment variables
         run: |
           echo ::set-env name=GO_VERSION::$(go version)
           echo ::set-env name=BUILT_BY::$(whoami)@$(hostname)
-          echo ::set-env name=GORELEASER_CURRENT_TAG::$(git describe --abbrev=0 --tags)
-      - name: Run GoReleaser
-        run: |
-          wget $(curl -s https://api.github.com/repos/goreleaser/goreleaser/releases | grep browser_download_url | grep 'goreleaser_Linux_x86_64' | head -n 1 | cut -d '"' -f 4)
-          tar -zxvf goreleaser_Linux_x86_64.tar.gz
-          echo "::add-path::$(pwd)/"
-          ls -al
-          echo $GORELEASER_CURRENT_TAG
-          git tag -a $GORELEASER_CURRENT_TAG -m "First release"
-          goreleaser release --skip-validate --skip-sign --debug
+      - name: goreleaser
+        uses: docker://goreleaser/goreleaser:latest
         env:
-          GO_VERSION: ${{ env.GO_VERSION }}
-          BUILT_BY: ${{ env.BUILT_BY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          args: release --config .github/goreleaser.yml
+        if: success()
