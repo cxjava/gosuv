@@ -14,7 +14,7 @@ builds:
       - -X "main.Commit={{.FullCommit}}"
       - -X "main.RepoUrl={{.GitURL}}"
       - -X "main.BuildDate={{.Date}}"
-      - -X "main.BuiltWithGoVersion={{.Env.GO_VERSION}}"
+      - -X "main.BuiltWithGoVersion={{.Env.GOLANG_VERSION}}"
       - -X "main.BuiltBy={{.Env.BUILT_BY}}"
     flags:
       - -tags=release
@@ -36,25 +36,10 @@ builds:
         goarch: 386
       - goos: darwin
         goarch: arm
-    hooks:
-      post: ./upx.sh {{.ProjectName}}
 archives:
-  - name_template: '{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}'
-    format: tar.gz
+  - format: gz
+    files:
+      - none*
     format_overrides:
       - goos: windows
         format: zip
-    wrap_in_directory: true
-    files:
-      - none*
-    replacements:
-      amd64: 64-bit
-      386: 32-bit
-      arm: ARM
-      arm64: ARM64
-      darwin: macOS
-      linux: Linux
-      windows: Windows
-      openbsd: OpenBSD
-      netbsd: NetBSD
-      freebsd: FreeBSD
