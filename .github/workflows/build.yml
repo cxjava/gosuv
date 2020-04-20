@@ -48,10 +48,15 @@ jobs:
         run: |
           echo ::set-env name=GO_VERSION::$(go version)
           echo ::set-env name=BUILT_BY::$(whoami)@$(hostname)
-      - name: goreleaser
-        uses: docker://goreleaser/goreleaser:latest
+      - name: Run GoReleaser
+        run: |
+          wget $(curl -s https://api.github.com/repos/goreleaser/goreleaser/releases | grep browser_download_url | grep 'goreleaser_Linux_x86_64' | head -n 1 | cut -d '"' -f 4)
+          tar -zxvf goreleaser_Linux_x86_64.tar.gz
+          echo "::add-path::$(pwd)/"
+          git tag -a $GORELEASER_CURRENT_TAG -m "First release"
+          # goreleaser release --skip-validate --skip-sign --debug
+          goreleaser release --config .github/goreleaser.yml
         env:
+          GO_VERSION: ${{ env.GO_VERSION }}
+          BUILT_BY: ${{ env.BUILT_BY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          args: release --config .github/goreleaser.yml
-        if: success()
