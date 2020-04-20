@@ -4,6 +4,8 @@ env:
 before:
   hooks:
     - go generate ./...
+    - export GO_VERSION=$(go version)
+    - export BUILT_BY=$(whoami)@$(hostname)
 
 builds:
   - env:
@@ -14,7 +16,7 @@ builds:
       - -X "main.Commit={{.FullCommit}}"
       - -X "main.RepoUrl={{.GitURL}}"
       - -X "main.BuildDate={{.Date}}"
-      - -X "main.BuiltWithGoVersion={{.Env.GOLANG_VERSION}}"
+      - -X "main.BuiltWithGoVersion={{.Env.GO_VERSION}}"
       - -X "main.BuiltBy={{.Env.BUILT_BY}}"
     flags:
       - -tags=release
