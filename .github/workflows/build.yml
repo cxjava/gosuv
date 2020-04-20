@@ -29,8 +29,11 @@ jobs:
           gitTagExists=$(git tag --points-at HEAD)
           if ! [ -n "$gitTagExists" ]; then
               echo "no tag, create one."
-              RELEASE_NAME=v$(date +%Y.%m%d.%H%M)
-              git tag $RELEASE_NAME
+              latesttag=$(git describe --tags)
+              echo "latest tag: ${latesttag}"
+              newtag=$(echo ${latesttag} | awk -F. -v OFS=. 'NF==1{print ++$NF}; NF>1{if(length($NF+1)>length($NF))$(NF-1)++; $NF=sprintf("%0*d", length($NF), ($NF+1)%(10^length($NF))); print}')
+              echo "new tag: ${newtag}"
+              git tag $newtag
           fi
       - name: Set environment variables
         run: |
