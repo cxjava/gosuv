@@ -32,22 +32,13 @@ jobs:
               RELEASE_NAME=v$(date +%Y.%m%d.%H%M)
               git tag $RELEASE_NAME
           fi
-      - name: Install upx
-        working-directory: /opt/
-        run: |
-          echo "Installing upx .."
-          curl -OL "https://github.com/upx/upx/releases/download/v${UPXVER}/upx-${UPXVER}-amd64_linux.tar.xz"
-          tar xvf "upx-${UPXVER}-amd64_linux.tar.xz"
-          echo "::add-path::`pwd`/upx-${UPXVER}-amd64_linux/"
-          upx --version
       - name: Set environment variables
         run: |
-          echo ::set-env name=GO_VERSION::$(go version)
+          #echo ::set-env name=GO_VERSION::$(go version)
           echo ::set-env name=BUILT_BY::$(whoami)@$(hostname)
       - name: goreleaser
         uses: docker://goreleaser/goreleaser:latest
         env:
-          GO_VERSION: ${{ env.GO_VERSION }}
           BUILT_BY: ${{ env.BUILT_BY }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
