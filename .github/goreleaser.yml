@@ -1,6 +1,5 @@
 env:
   - GO111MODULE=on
-  - BUILT_BY=goreleaser
 
 before:
   hooks:
@@ -23,24 +22,23 @@ builds:
       - windows
       - darwin
       - linux
+      - freebsd
     goarch:
-      - 386
       - amd64
       - arm
       - arm64
     goarm:
-      - 5
       - 6
       - 7
     ignore:
-      - goos: darwin
-        goarch: 386
       - goos: darwin
         goarch: arm
 archives:
   - format: gz
     files:
       - none*
+    replacements:
+      darwin: mac
     format_overrides:
       - goos: windows
         format: zip
