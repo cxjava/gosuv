@@ -1,13 +1,6 @@
-name: goreleaser
+name: Release
 
 on:
-  # release:
-  #   types: published
-  # push:
-  #   branches:
-  #     - master
-  # schedule:
-  #  - cron: 0 8 * * 5
   push:
     tags:
       - "v*"
@@ -15,12 +8,28 @@ on:
     types: started
 
 jobs:
-  goreleaser:
-    runs-on: ubuntu-latest
+  release:
+    name: Release
     if: github.event.repository.owner.id == github.event.sender.id
+    strategy:
+      matrix:
+        os: [ ubuntu-latest ]
+        go-version: [ 1.14.x ]
+    runs-on: ${{ matrix.os }}
+    
     steps:
+      - name: Install Go
+        uses: actions/setup-go@v1
+        with:
+          go-version: ${{ matrix.go-version }}
+        
       - name: Check out code
         uses: actions/checkout@v2
+        
+      # So GoReleaser can generate the changelog properly
+      - name: Unshallowify the repo clone
+        run: git fetch --prune --unshallow
+        
       - name: Check git tag exist
         run: |
           git fetch --depth=1 origin +refs/tags/*:refs/tags/*
@@ -33,10 +42,29 @@ jobs:
               echo "new tag: ${newtag}"
               git tag $newtag
           fi
-      - name: goreleaser
-        uses: docker://goreleaser/goreleaser:latest
+          
+      - name: Print Go version and environment
+        id: vars
+        run: |
+          printf "Using go at: $(which go)\n"
+          printf "Go version: $(go version)\n"
+          printf "\n\nGo environment:\n\n"
+          go env
+          printf "\n\nSystem environment:\n\n"
+          env
+          
+      - name: Set environment variables
+        run: |
+          echo ::set-env name=GOLANG_VERSION::$(go version)
+          echo ::set-env name=BUILT_BY::$(whoami)@$(hostname)
+          
+      # GoReleaser will take care of publishing those artifacts into the release
+      - name: Run GoReleaser
+        uses: goreleaser/goreleaser-action@v1
+        with:
+          version: latest
+          args: release --rm-dist --skip-validate --skip-sign --debug --config .github/goreleaser.yml
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          args: release --skip-validate --skip-sign --debug --config .github/goreleaser.yml
-        if: success()
+          GOLANG_VERSION: ${{ env.GOLANG_VERSION }}
+          BUILT_BY: ${{ env.BUILT_BY }}
